@@ -61,6 +61,11 @@ namespace Vehicles.API.Helpers
             await _userManager.AddToRoleAsync(user, roleName);
         }
 
+        public async Task<IdentityResult> ChangePasswordAsync(User user, string oldPassword, string newPassword)
+        {
+            return await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
+        }
+
         public async Task CheckRoleAsync(string roleName)
         {
             bool roleExist = await _roleManager.RoleExistsAsync(roleName);
@@ -70,9 +75,24 @@ namespace Vehicles.API.Helpers
             }
         }
 
+        public async Task<IdentityResult> ConfirmEmailAsync(User user, string token)
+        {
+            return await _userManager.ConfirmEmailAsync(user, token);
+        }
+
         public async Task<IdentityResult> DeleteUserAsync(User user)
         {
             return await _userManager.DeleteAsync(user);
+        }
+
+        public async Task<string> GenerateEmailConfirmationTokenAsync(User user)
+        {
+            return await _userManager.GenerateEmailConfirmationTokenAsync(user);
+        }
+
+        public async Task<string> GeneratePasswordResetTokenAsync(User user)
+        {
+            return await _userManager.GeneratePasswordResetTokenAsync(user);
         }
 
         public async Task<User> GetUserAsync(string email)
@@ -114,6 +134,11 @@ namespace Vehicles.API.Helpers
             await _signInManager.SignOutAsync();
         }
 
+        public async Task<IdentityResult> ResetPasswordAsync(User user, string token, string password)
+        {
+            return await _userManager.ResetPasswordAsync(user, token, password);
+        }
+
         public async Task<IdentityResult> UpdateUserAsync(User user)
         {
             User currentUser = await GetUserAsync(user.Email);
@@ -125,6 +150,11 @@ namespace Vehicles.API.Helpers
             currentUser.ImageId = user.ImageId;
             currentUser.PhoneNumber = user.PhoneNumber;
             return await _userManager.UpdateAsync(currentUser);
+        }
+
+        public async Task<SignInResult> ValidatePasswordAsync(User user, string password)
+        {
+            return await _signInManager.CheckPasswordSignInAsync(user, password, false);
         }
     }
 }
