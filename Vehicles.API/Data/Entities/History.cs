@@ -18,6 +18,10 @@ namespace Vehicles.API.Data.Entities
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd hh:mm tt}")]
         public DateTime Date { get; set; }
 
+        [Display(Name = "Fecha")]
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd hh:mm tt}")]
+        public DateTime Datelocale => Date.ToLocalTime();
+
         [Display(Name = "Kilometraje")]
         [DisplayFormat(DataFormatString = "{0:N0}")]
         public int Mileage { get; set; }
